@@ -1,11 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
+    <title>Country</title>
+
     <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -15,49 +15,52 @@
     <script src="https://kit.fontawesome.com/92b110740b.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
+
     <style>
         .form{
-            padding-top: 30vh;
+            padding-top: 10vh;
         }
-    
-        .heading{
-            height: 25vh;
-            background-color: #33FF60;
-        }
-        
-
     </style>
-
 </head>
-
 <body>
     <div class="container-fluid">
-        <div class="row heading">
-            <div class="col-12">
-                <h1 style="padding-top: 8vh;font-family:cursive;">Weather Updates</h1>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <form action="{% url 'weather' %}" method="POST">
+        <form action="{% url 'country_query' %}" method="POST">
             {% csrf_token %}
             <div class="row justify-content-center form">
                 <div class="col-10 col-md-8 col-xl-6">
                     <div class="p-2 bg-light rounded-pill shadow-lg">
                         <div class="input-group">
-                            <input type="text" placeholder="Search any city" class="form-control border-0 bg-light" name="city">
+                            <input type="text" placeholder="Search any country" class="form-control border-0 bg-light" name="country">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-link"><i class="fa fa-search" style="color: #33FF60;font-size:20px;"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </form>
     </div>
-
+    {% if cities %}
+    <div class="container">
+        <div class="row" style="padding-bottom: 5vh;">
+            {% for city in cities %}
+            <div class="col-12 col-md-6 col-xl-4" style="padding-top: 5vh;">
+                <div class="card border-info">
+                    <h5 class="card-header"><strong>Weather in {{ city.city }}</strong></h5>
+                    <div class="card-body">
+                        <div>
+                            <h2>{{ city.city }} , {{ city.country }}</h2>
+                            <h4>{{ city.temperature }} °C<br>
+                                {{ city.condition }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <h1>{{ message }}</h1>
+    {% endif %}
 </body>
-
 </html>
