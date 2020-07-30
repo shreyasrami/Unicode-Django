@@ -41,8 +41,8 @@ def weather(request):
 
 def country_query(request):
     if request.method == 'POST':
-        try:
-            country = request.POST['country']
+        country = request.POST['country']
+        if Weather.objects.filter(country__iexact=country):
             cities = Weather.objects.filter(country__iexact=country)
             for city in cities:
                 city.count += 1
@@ -50,8 +50,7 @@ def country_query(request):
             context = {
                 'cities' : cities 
             }
-        except Exception as e:
-            print(e)
+        else:
             context = {
                 'message' : 'No country found matching the query' 
             }

@@ -23,6 +23,8 @@
     </style>
 </head>
 <body>
+
+<!-- Specific Field Query Form -->
     <div class="container-fluid">
         <form action="{% url 'country_query' %}" method="POST">
             {% csrf_token %}
@@ -40,6 +42,8 @@
             </div>
         </form>
     </div>
+
+<!-- Response for Specific Field Query-->
     {% if cities %}
     <div class="container">
         <div class="row" style="padding-bottom: 5vh;">
@@ -60,6 +64,8 @@
         </div>
     </div>
     {% else %}
+    
+<!-- Error Message -->
     <h1>{{ message }}</h1>
     {% endif %}
 </body>

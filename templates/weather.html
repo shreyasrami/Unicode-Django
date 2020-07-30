@@ -25,9 +25,14 @@
 </head>
 
 <body>
+<!-- Weather of queried city -->
+    
+    <!-- Error Message -->
     {% if message %}
     <h2>{{message}}.<br><a href="/">Click here to search another city</a></h2>
     {% else %}
+
+    <!-- Api Response -->
     <div class="row justify-content-center weather">
         <div class="col-10 col-md-6 col-xl-3">
             <div class="card border-info shadow-lg">
