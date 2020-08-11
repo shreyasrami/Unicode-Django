@@ -11,4 +11,4 @@ class Weather(models.Model):
     count = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.city+'_'+str(self.id)
+        return self.city+'_'+str(self.count)

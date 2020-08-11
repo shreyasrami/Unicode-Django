@@ -34,7 +34,17 @@ def weather(request):
             context = {
                 'message': 'City not found'
             }
-        return render(request, 'weather.html', context)
+
+        except Exception as e:
+            print(e)
+            context = {
+                'message': 'Something went wrong'
+            }
+        
+        finally:
+            return render(request, 'weather.html', context)
+
+        
     else:
         return render(request,'form.html')
 
