@@ -4,10 +4,7 @@ from django.http import JsonResponse
 import requests
 from .models import Weather
 from django.views.generic import TemplateView
-"""
-import os
-from twilio.rest import Client
-"""
+
 # Create your views here.
 
 
@@ -84,36 +81,7 @@ def country_query(request):
 def top3_query(request):
     cities_temp = list(Weather.objects.order_by('city').distinct('city').values())
     cities = []
-    """
-    account_sid = 'AC3131b2de5c0c504f06a33e6a87f6363c'
-    auth_token = '69fd87f5d280cc80b1a5b3c247fcefd8'
-    client = Client(account_sid, auth_token)
-
-    message = client.messages \
-                    .create(
-                        body="Hello",
-                        from_='+19165128656',
-                        to='+91 79777 49378'
-                    )
-
-    print(message.sid)
-
-    For Whatsapp:
     
- 
-    account_sid = 'AC3131b2de5c0c504f06a33e6a87f6363c' 
-    auth_token = '69fd87f5d280cc80b1a5b3c247fcefd8' 
-    client = Client(account_sid, auth_token) 
-    
-    message = client.messages.create( 
-                                from_='whatsapp:+14155238886',  
-                                body='Your appointment is coming up on July 21 at 3PM',      
-                                to='whatsapp:+917977749378' 
-                            ) 
-    
-    print(message.sid)
-    """
-
     while cities_temp:
         mn = cities_temp[0]['count']
         tp = cities_temp[0]
@@ -166,8 +134,3 @@ class Graphs(TemplateView):
 
 
 
-class YO:
-    def hii(request):
-        wthr = Weather.objects.all()
-        for i in wthr:
-            print(i)

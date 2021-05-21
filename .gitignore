@@ -1,2 +1,18 @@
-.env
+# Django stuff:
 *.log
+local_settings.py
+
+
+
+# pyenv
+.python-version
+
+
+# Environments
+.env
+.venv
+env/
+weatherenv/
+ENV/
+env.bak/
+venv.bak/
