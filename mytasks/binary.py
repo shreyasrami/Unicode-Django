@@ -12,4 +12,4 @@ def check_binary(num1,num2):
             temp = digit
         else:
             result[num] = False
-    return result
+    return result 

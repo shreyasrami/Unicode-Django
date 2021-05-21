@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs</title>
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/92b110740b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js"></script>
+  
+    
+    
+    <style>
+      body{
+          overflow-x: hidden;
+        }
+        .fa-plus-circle{
+          color:#04fe9e;
+          background-color: white;
+          border-radius: 100%;
+          border: 5px solid white;
+        }
+        
+        /* --------------------------------NAVBAR-START-------------------------- */
+        .navbar{
+          /* background-color: #04fe9e; */
+        
+        }
+        .health{
+            /* font-family: "Poppins", sans-serif; */
+            font-weight: bold;
+            font-size: 20px;
+            /* "Helvetica Neue", Helvetica, Arial, sans-serif */
+        }
+        nav {
+          /* background-image: linear-gradient(-45deg,  #04fe9e 0%, #c7eb44 100%); */
+        
+        }
+        .nav-item {
+          margin-left: 10%;
+          text-align: center;
+          font-weight: bold;
+        
+        }
+        .navitems {
+          margin-right: 5%;
+        
+        }
+        
+        .collapsediv {
+          padding-right: 10%;
+        }
+        .meet {
+          margin-top: 8px;
+          text-align: center;
+        }
+        .meet:hover {
+          background-color: #c7eb44;
+          transition: 0.5s;
+          /* border-radius: 999px; */
+          /* width: 150%; */
+        
+          text-align: center;
+        }
+        .fa-accusoft {
+          color: #ab0061;
+        }
+        .colorbtns:hover{
+          background-color:inherit;
+        }
+        /* --------------------------------NAVBAR-END-------------------------- */
+        
+        
+        .containergreen{
+          height: 200px;
+          border-radius: 0 0 100% 100%;
+          width: 100%;
+          background-image: linear-gradient(-45deg,  #04fe9e 0%, #c7eb44 100%);
+        }
+        
+        .blogs{
+          color: white;
+          text-align: center;
+          padding-top: 70px;
+          padding-left: 5%;
+          padding-right: 5%;
+          padding-bottom: 5%;
+        
+        }
+        
+        .btn{
+          border-radius: 999px;
+        }
+        .btn:hover{
+          background-color: #04fe9e;
+        }
+        .fa-plus-circle{
+          color:#04fe9e;
+          background-color: white;
+          border-radius: 100%;
+          border: 5px solid white;
+        }
+        .wrapper{
+          width: 600px;
+          height: 600px;
+        }
+        
+  </style>
+  
+</head>
+<body>
+  <!-- ===============================NAVBAR-START======================================= -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #04fe9e;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse collapsediv navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 navitems">
+        <li class="nav-item">
+          <a class="nav-link meet" aria-current="page" href="{% url 'weather' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link meet" href="{% url 'country_query' %}">Country</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link meet" href="{% url 'top3_query' %}">Top3</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link meet active" href="{% url 'graphs' %}">Graphs</a>
+        </li>
+
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<!-- ===============================NAVBAR-END======================================= -->
+
+
+  <div class="containergreen">
+    <h1 class="blogs">Graphs</h1>
+  </div><br>
+
+  <h3>All Cities</h3><br><br>
+  <script>
+    $(document).ready(function(){
+      var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for obj in all %}'{{ obj.city }}',{% endfor %}],
+            datasets: [{
+                label: 'Number of Searches',
+                data: [{% for obj in all %}'{{ obj.count }}',{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+      
+    })
+    
+    </script>
+  <div class="container"><canvas id="myChart" width="3" height="1"></canvas></div>
+  <br><br><br><br>
+  
+
+  <h3>Based on Countries</h3><br><br>
+
+  {% for country in countries %}
+  
+  <script>
+    $(document).ready(function(){
+      var ctx = document.getElementById('countries_{{forloop.counter}}').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{% for city in country.country %}'{{ city.city }}',{% endfor %}],
+            datasets: [{
+                label: '{{ country.country.first.country }}',
+                data: [{% for city in country.country %}'{{ city.count }}',{% endfor %}],
+                backgroundColor: [
+                    
+                    'rgba(54, 162, 235, 0.2)',
+                     
+                 
+                ],
+                borderColor: [
+                    'blue',
+            
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+      
+    })
+    
+    </script>
+  <div class="container"><canvas id="countries_{{forloop.counter}}" width="3" height="1"></canvas></div>
+  <br><br><br><br><br>
+  {% endfor %}
+  
+  <h3>Top 3 Most Searched Cities</h3><br><br>
+  <script>
+    $(document).ready(function(){
+      var ctx = document.getElementById('pchart').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels: [{% for city in cities %}'{{ city.city }}',{% endfor %}],
+              datasets: [{
+                  label: 'Most Searched Cities',
+                  data: [{% for city in cities %}'{{ city.count }}',{% endfor %}],
+                  backgroundColor: [
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(80, 10, 86, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(80, 10, 86, 1)',
+                      'rgba(153, 102, 255, 1)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: false
+                  }
+              }
+          }
+      });
+        
+    })
+    
+  </script>
+  <div class="wrapper container"><canvas id="pchart" width="200" height="200"></canvas></div>
+  <br><br><br>
+</body>
+</html>
