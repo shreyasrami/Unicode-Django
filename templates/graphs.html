@@ -126,10 +126,40 @@
           border-radius: 100%;
           border: 5px solid white;
         }
+        
+        @media only screen and (max-width:767px){
+          
+          .wrapper{
+            position: relative;
+            width:80vw;
+            height:80vh;
+          }
+      
+      }
+      @media only screen and (min-width:768px){
+      
+          .wrapper{
+            position: relative;
+            width:60vw;
+            height:80vh;
+          }
+          
+      }
+      @media only screen and (min-width:992px){
+      
         .wrapper{
-          width: 600px;
-          height: 600px;
+          position: relative;
+          width:40vw;
+          height:80vh;
         }
+        
+    }
+    .navbar-toggler:focus,
+    .navbar-toggler:active,
+    .navbar-toggler-icon:focus{
+      outline: none;
+      box-shadow:none;
+    }
         
   </style>
   
@@ -171,7 +201,7 @@
     <h1 class="blogs">Graphs</h1>
   </div><br>
 
-  <h3>All Cities</h3><br><br>
+  <h3 style="text-align: center;">All Cities</h3><br><br>
   <script>
     $(document).ready(function(){
       var ctx = document.getElementById('myChart').getContext('2d');
@@ -217,7 +247,7 @@
   <br><br><br><br>
   
 
-  <h3>Based on Countries</h3><br><br>
+  <h3 style="text-align: center;">Based on Countries</h3><br><br>
 
   {% for country in countries %}
   
@@ -260,7 +290,7 @@
   <br><br><br><br><br>
   {% endfor %}
   
-  <h3>Top 3 Most Searched Cities</h3><br><br>
+  <h3 style="text-align: center;">Top 3 Most Searched Cities</h3><br><br>
   <script>
     $(document).ready(function(){
       var ctx = document.getElementById('pchart').getContext('2d');
@@ -297,7 +327,7 @@
     })
     
   </script>
-  <div class="wrapper container"><canvas id="pchart" width="200" height="200"></canvas></div>
+  <div class="wrapper container"><canvas id="pchart"></canvas></div>
   <br><br><br>
 
   
